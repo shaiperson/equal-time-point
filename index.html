@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Geometry Playground</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      body {
+        font-family: "SF Mono", "Menlo", "Consolas", monospace;
+        background: #0d1117;
+        color: #e6edf3;
+        padding: 1rem;
+        max-width: 52rem;
+        margin: 0 auto;
+        font-size: 0.8rem;
+        line-height: 1.6;
+      }
+      h1 {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+        color: #58a6ff;
+      }
+      .subtitle {
+        font-size: 0.7rem;
+        color: #8b949e;
+        margin-bottom: 1rem;
+      }
+      .stage {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.75rem;
+        margin-bottom: 1rem;
+      }
+      .panel {
+        border: 1px solid #30363d;
+        border-radius: 4px;
+        background: #161b22;
+        padding: 0.5rem;
+      }
+      .panel h2 {
+        font-size: 0.7rem;
+        font-weight: 600;
+        color: #8b949e;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.4rem;
+      }
+      svg { width: 100%; height: auto; display: block; }
+      .controls {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.6rem 1rem;
+        border: 1px solid #30363d;
+        border-radius: 4px;
+        background: #161b22;
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+      }
+      .control { display: flex; flex-direction: column; gap: 0.2rem; }
+      .control-row {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.7rem;
+        color: #8b949e;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+      .control-row .value { color: #e6edf3; font-variant-numeric: tabular-nums; }
+      input[type=range] {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 100%;
+        height: 4px;
+        background: #30363d;
+        border-radius: 2px;
+        outline: none;
+      }
+      input[type=range]::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #58a6ff;
+        cursor: pointer;
+        border: 2px solid #0d1117;
+      }
+      input[type=range]::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: #58a6ff;
+        cursor: pointer;
+        border: 2px solid #0d1117;
+      }
+      .stats {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr));
+        gap: 0.4rem 1rem;
+        font-size: 0.7rem;
+        color: #8b949e;
+        border-top: 1px solid #30363d;
+        padding-top: 0.5rem;
+        margin-top: 0.25rem;
+      }
+      .stats span { color: #e6edf3; font-variant-numeric: tabular-nums; }
+      .preset-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-bottom: 1rem;
+      }
+      .preset-row button {
+        font-family: inherit;
+        font-size: 0.75rem;
+        background: #21262d;
+        color: #e6edf3;
+        border: 1px solid #30363d;
+        border-radius: 4px;
+        padding: 0.4rem 0.8rem;
+        cursor: pointer;
+      }
+      .preset-row button:hover { background: #30363d; border-color: #58a6ff; }
+      .preset-row button.toggle.on { background: #1f6feb; border-color: #1f6feb; color: #fff; }
+      @media (max-width: 600px) {
+        .stage { grid-template-columns: 1fr; }
+        .controls { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Geometry Playground</h1>
+    <div class="subtitle">Drag the sliders. The curve on the left is a hypotrochoid — the path traced by a pen attached to a small circle rolling inside a larger one. The diagram on the right shows the live mechanism.</div>
+
+    <div class="preset-row">
+      <button data-preset="classic">Classic</button>
+      <button data-preset="rose">Rose</button>
+      <button data-preset="star">Star</button>
+      <button data-preset="cardioid">Cardioid-ish</button>
+      <button data-preset="dense">Dense</button>
+      <button data-preset="circle">Circle</button>
+      <button id="anim-toggle" class="toggle">▶ Animate</button>
+    </div>
+
+    <div class="controls">
+      <div class="control">
+        <div class="control-row"><span>Outer radius R</span><span class="value" id="rOut-val">120</span></div>
+        <input type="range" id="rOut" min="40" max="180" step="1" value="120" />
+      </div>
+      <div class="control">
+        <div class="control-row"><span>Inner radius r</span><span class="value" id="rIn-val">45</span></div>
+        <input type="range" id="rIn" min="5" max="160" step="1" value="45" />
+      </div>
+      <div class="control">
+        <div class="control-row"><span>Pen offset d</span><span class="value" id="off-val">60</span></div>
+        <input type="range" id="off" min="0" max="120" step="1" value="60" />
+      </div>
+      <div class="control">
+        <div class="control-row"><span>Animation θ</span><span class="value" id="theta-val">0.00</span></div>
+        <input type="range" id="theta" min="0" max="6283" step="1" value="0" />
+      </div>
+      <div class="stats">
+        <div>petals/cusps: <span id="stat-petals">—</span></div>
+        <div>r / R: <span id="stat-ratio">—</span></div>
+        <div>d / r: <span id="stat-doverr">—</span></div>
+        <div>samples: <span id="stat-samples">—</span></div>
+      </div>
+    </div>
+
+    <div class="stage">
+      <div class="panel">
+        <h2>Curve</h2>
+        <svg id="curve-svg" viewBox="-200 -200 400 400" preserveAspectRatio="xMidYMid meet">
+          <circle cx="0" cy="0" r="180" fill="none" stroke="#21262d" stroke-width="0.5" />
+          <line x1="-200" y1="0" x2="200" y2="0" stroke="#21262d" stroke-width="0.5" />
+          <line x1="0" y1="-200" x2="0" y2="200" stroke="#21262d" stroke-width="0.5" />
+          <path id="curve-path" fill="none" stroke="#58a6ff" stroke-width="1.2" stroke-linejoin="round" />
+          <circle id="curve-pen" r="3" fill="#f0883e" />
+        </svg>
+      </div>
+      <div class="panel">
+        <h2>Mechanism</h2>
+        <svg id="mech-svg" viewBox="-200 -200 400 400" preserveAspectRatio="xMidYMid meet">
+          <circle id="mech-outer" cx="0" cy="0" r="120" fill="none" stroke="#30363d" stroke-width="1.2" stroke-dasharray="3 3" />
+          <circle id="mech-inner" cx="0" cy="0" r="45" fill="none" stroke="#8b949e" stroke-width="1" />
+          <line id="mech-arm" x1="0" y1="0" x2="0" y2="0" stroke="#f0883e" stroke-width="1" />
+          <circle id="mech-center-inner" r="2" fill="#8b949e" />
+          <circle id="mech-pen" r="3.5" fill="#f0883e" />
+          <path id="mech-trail" fill="none" stroke="#58a6ff" stroke-width="0.8" opacity="0.4" />
+        </svg>
+      </div>
+    </div>
+
+    <script>
+      (function () {
+        var rOut = document.getElementById("rOut");
+        var rIn = document.getElementById("rIn");
+        var off = document.getElementById("off");
+        var theta = document.getElementById("theta");
+        var rOutVal = document.getElementById("rOut-val");
+        var rInVal = document.getElementById("rIn-val");
+        var offVal = document.getElementById("off-val");
+        var thetaVal = document.getElementById("theta-val");
+        var statPetals = document.getElementById("stat-petals");
+        var statRatio = document.getElementById("stat-ratio");
+        var statDR = document.getElementById("stat-doverr");
+        var statSamples = document.getElementById("stat-samples");
+
+        var curvePath = document.getElementById("curve-path");
+        var curvePen = document.getElementById("curve-pen");
+        var mechInner = document.getElementById("mech-inner");
+        var mechArm = document.getElementById("mech-arm");
+        var mechCenter = document.getElementById("mech-center-inner");
+        var mechPen = document.getElementById("mech-pen");
+        var mechTrail = document.getElementById("mech-trail");
+
+        function gcd(a, b) {
+          a = Math.round(a); b = Math.round(b);
+          while (b) { var t = b; b = a % b; a = t; }
+          return a;
+        }
+
+        function compute() {
+          var R = +rOut.value;
+          var r = Math.min(+rIn.value, R - 1);
+          var d = +off.value;
+          var th = +theta.value / 1000;
+
+          rOutVal.textContent = R;
+          rInVal.textContent = r;
+          offVal.textContent = d;
+          thetaVal.textContent = th.toFixed(2);
+
+          var g = gcd(R, r) || 1;
+          var petals = (R - r) / g;
+          if (!Number.isFinite(petals) || petals < 1) petals = 1;
+          var cycles = Math.min(40, Math.max(1, r / g));
+          var samples = Math.min(2400, Math.max(200, Math.round(petals * 80)));
+          var tMax = cycles * 2 * Math.PI;
+
+          var dStr = "";
+          for (var i = 0; i <= samples; i++) {
+            var t = (i / samples) * tMax;
+            var x = (R - r) * Math.cos(t) + d * Math.cos(((R - r) / r) * t);
+            var y = (R - r) * Math.sin(t) - d * Math.sin(((R - r) / r) * t);
+            dStr += (i === 0 ? "M" : "L") + x.toFixed(2) + "," + y.toFixed(2);
+          }
+          curvePath.setAttribute("d", dStr);
+
+          var px = (R - r) * Math.cos(th) + d * Math.cos(((R - r) / r) * th);
+          var py = (R - r) * Math.sin(th) - d * Math.sin(((R - r) / r) * th);
+          curvePen.setAttribute("cx", px.toFixed(2));
+          curvePen.setAttribute("cy", py.toFixed(2));
+
+          document.getElementById("mech-outer").setAttribute("r", R);
+          mechInner.setAttribute("r", r);
+          var cx = (R - r) * Math.cos(th);
+          var cy = (R - r) * Math.sin(th);
+          mechInner.setAttribute("cx", cx.toFixed(2));
+          mechInner.setAttribute("cy", cy.toFixed(2));
+          mechCenter.setAttribute("cx", cx.toFixed(2));
+          mechCenter.setAttribute("cy", cy.toFixed(2));
+          mechArm.setAttribute("x1", cx.toFixed(2));
+          mechArm.setAttribute("y1", cy.toFixed(2));
+          mechArm.setAttribute("x2", px.toFixed(2));
+          mechArm.setAttribute("y2", py.toFixed(2));
+          mechPen.setAttribute("cx", px.toFixed(2));
+          mechPen.setAttribute("cy", py.toFixed(2));
+
+          var trailSamples = Math.min(600, Math.round(samples * (th / tMax)));
+          var trailStr = "";
+          if (trailSamples > 1) {
+            for (var j = 0; j <= trailSamples; j++) {
+              var tt = (j / samples) * tMax;
+              var tx = (R - r) * Math.cos(tt) + d * Math.cos(((R - r) / r) * tt);
+              var ty = (R - r) * Math.sin(tt) - d * Math.sin(((R - r) / r) * tt);
+              trailStr += (j === 0 ? "M" : "L") + tx.toFixed(2) + "," + ty.toFixed(2);
+            }
+          }
+          mechTrail.setAttribute("d", trailStr);
+
+          statPetals.textContent = petals;
+          statRatio.textContent = (r / R).toFixed(3);
+          statDR.textContent = r > 0 ? (d / r).toFixed(3) : "—";
+          statSamples.textContent = samples;
+        }
+
+        var presets = {
+          classic:  { R: 120, r: 45, d: 60 },
+          rose:     { R: 100, r: 40, d: 80 },
+          star:     { R: 150, r: 60, d: 100 },
+          cardioid: { R: 100, r: 50, d: 50 },
+          dense:    { R: 120, r: 53, d: 90 },
+          circle:   { R: 120, r: 1,  d: 80 },
+        };
+        document.querySelectorAll("[data-preset]").forEach(function (btn) {
+          btn.addEventListener("click", function () {
+            var p = presets[btn.getAttribute("data-preset")];
+            if (!p) return;
+            rOut.value = p.R; rIn.value = p.r; off.value = p.d;
+            compute();
+          });
+        });
+
+        [rOut, rIn, off, theta].forEach(function (el) {
+          el.addEventListener("input", compute);
+        });
+
+        var animating = false;
+        var animBtn = document.getElementById("anim-toggle");
+        function animate() {
+          if (!animating) return;
+          var v = +theta.value + 12;
+          if (v > +theta.max) v = 0;
+          theta.value = v;
+          compute();
+          requestAnimationFrame(animate);
+        }
+        animBtn.addEventListener("click", function () {
+          animating = !animating;
+          animBtn.classList.toggle("on", animating);
+          animBtn.textContent = animating ? "⏸ Pause" : "▶ Animate";
+          if (animating) requestAnimationFrame(animate);
+        });
+
+        compute();
+      })();
+    </script>
+  </body>
+</html>
