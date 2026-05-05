@@ -8,35 +8,23 @@
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body {
         font-family: "SF Mono", "Menlo", "Consolas", monospace;
-        background: #0d1117;
-        color: #e6edf3;
-        padding: 1rem;
-        max-width: 52rem;
-        margin: 0 auto;
-        font-size: 0.8rem;
-        line-height: 1.6;
+        background: #0d1117; color: #e6edf3;
+        padding: 1rem; max-width: 52rem; margin: 0 auto;
+        font-size: 0.8rem; line-height: 1.6;
       }
       h1 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; color: #58a6ff; }
       .subtitle { font-size: 0.7rem; color: #8b949e; margin-bottom: 1rem; }
       .controls {
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        gap: 0.6rem 1rem;
-        border: 1px solid #30363d;
-        border-radius: 4px;
-        background: #161b22;
-        padding: 0.75rem 1rem;
-        margin-bottom: 1rem;
+        display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem 1rem;
+        border: 1px solid #30363d; border-radius: 4px; background: #161b22;
+        padding: 0.75rem 1rem; margin-bottom: 1rem;
       }
       .control { display: flex; flex-direction: column; gap: 0.25rem; }
       .control.full { grid-column: 1 / -1; }
       .control-row {
-        display: flex;
-        justify-content: space-between;
-        font-size: 0.7rem;
-        color: #8b949e;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
+        display: flex; justify-content: space-between;
+        font-size: 0.7rem; color: #8b949e;
+        text-transform: uppercase; letter-spacing: 0.05em;
       }
       .control-row .value { color: #e6edf3; font-variant-numeric: tabular-nums; }
       input[type=range] {
@@ -47,13 +35,11 @@
       input[type=range]::-webkit-slider-thumb {
         -webkit-appearance: none; appearance: none;
         width: 18px; height: 18px; border-radius: 50%;
-        background: #58a6ff; cursor: pointer;
-        border: 2px solid #0d1117;
+        background: #58a6ff; cursor: pointer; border: 2px solid #0d1117;
       }
       input[type=range]::-moz-range-thumb {
         width: 18px; height: 18px; border-radius: 50%;
-        background: #58a6ff; cursor: pointer;
-        border: 2px solid #0d1117;
+        background: #58a6ff; cursor: pointer; border: 2px solid #0d1117;
       }
       input[type=number] {
         font-family: inherit; font-size: 0.85rem;
@@ -70,26 +56,21 @@
         padding: 0.5rem 1rem; cursor: pointer;
       }
       #add-btn { background: #1f6feb; border-color: #1f6feb; color: #fff; }
-      #add-btn:hover { background: #388bfd; border-color: #388bfd; }
-      #reset-btn:hover { background: #30363d; border-color: #f85149; color: #f85149; }
-      .panel {
-        border: 1px solid #30363d; border-radius: 4px;
-        background: #161b22; padding: 0.5rem;
-      }
+      #reset-btn:hover { border-color: #f85149; color: #f85149; }
+      .panel { border: 1px solid #30363d; border-radius: 4px; background: #161b22; padding: 0.5rem; }
       svg { width: 100%; height: auto; display: block; touch-action: none; }
       .anchor { cursor: grab; }
-      .anchor:active { cursor: grabbing; }
       .anchor-label {
-        font-family: inherit; font-size: 14px;
-        fill: #f0883e; font-weight: 600;
-        pointer-events: none;
-        user-select: none;
+        font-family: inherit; font-size: 14px; fill: #f0883e; font-weight: 600;
+        pointer-events: none; user-select: none;
       }
       .meta {
         font-size: 0.7rem; color: #8b949e; margin-top: 0.5rem;
         display: flex; gap: 1rem; flex-wrap: wrap;
       }
       .meta span { color: #e6edf3; font-variant-numeric: tabular-nums; }
+      .status { font-size: 0.65rem; color: #f85149; margin-top: 0.4rem; }
+      .status.ok { color: #3fb950; }
     </style>
   </head>
   <body>
@@ -125,27 +106,75 @@
             <path d="M0,0 L10,5 L0,10 z" fill="#f0883e" />
           </marker>
         </defs>
-        <g id="grid-layer" pointer-events="none"></g>
+
+        <g pointer-events="none">
+          <g stroke="#1c2129" stroke-width="0.5">
+            <line x1="-250" y1="-280" x2="-250" y2="280" />
+            <line x1="-150" y1="-280" x2="-150" y2="280" />
+            <line x1="-50" y1="-280" x2="-50" y2="280" />
+            <line x1="50" y1="-280" x2="50" y2="280" />
+            <line x1="150" y1="-280" x2="150" y2="280" />
+            <line x1="250" y1="-280" x2="250" y2="280" />
+            <line x1="-280" y1="-250" x2="280" y2="-250" />
+            <line x1="-280" y1="-150" x2="280" y2="-150" />
+            <line x1="-280" y1="-50" x2="280" y2="-50" />
+            <line x1="-280" y1="50" x2="280" y2="50" />
+            <line x1="-280" y1="150" x2="280" y2="150" />
+            <line x1="-280" y1="250" x2="280" y2="250" />
+          </g>
+          <g stroke="#2a313c" stroke-width="0.8">
+            <line x1="-200" y1="-280" x2="-200" y2="280" />
+            <line x1="-100" y1="-280" x2="-100" y2="280" />
+            <line x1="100" y1="-280" x2="100" y2="280" />
+            <line x1="200" y1="-280" x2="200" y2="280" />
+            <line x1="-280" y1="-200" x2="280" y2="-200" />
+            <line x1="-280" y1="-100" x2="280" y2="-100" />
+            <line x1="-280" y1="100" x2="280" y2="100" />
+            <line x1="-280" y1="200" x2="280" y2="200" />
+          </g>
+          <g stroke="#3a4350" stroke-width="1">
+            <line x1="-280" y1="0" x2="280" y2="0" />
+            <line x1="0" y1="-280" x2="0" y2="280" />
+          </g>
+          <g fill="#6e7681" font-size="11">
+            <text x="-200" y="14" text-anchor="middle">-200</text>
+            <text x="-100" y="14" text-anchor="middle">-100</text>
+            <text x="100" y="14" text-anchor="middle">100</text>
+            <text x="200" y="14" text-anchor="middle">200</text>
+            <text x="6" y="-196">200</text>
+            <text x="6" y="-96">100</text>
+            <text x="6" y="104">-100</text>
+            <text x="6" y="204">-200</text>
+          </g>
+          <g stroke="#8b949e" stroke-width="1.2">
+            <line x1="160" y1="265" x2="260" y2="265" />
+            <line x1="160" y1="261" x2="160" y2="269" />
+            <line x1="260" y1="261" x2="260" y2="269" />
+          </g>
+          <text x="210" y="258" fill="#8b949e" font-size="10" text-anchor="middle">100 units</text>
+        </g>
+
         <g id="pairs-layer"></g>
-        <line id="dir-arrow" x1="0" y1="0" x2="0" y2="0" stroke="#f0883e" stroke-width="1.5" marker-end="url(#arrow)" opacity="0.8" />
-        <circle id="point-a" class="anchor" r="8" fill="#f0883e" stroke="#0d1117" stroke-width="2" />
-        <circle id="point-b" class="anchor" r="8" fill="#f0883e" stroke="#0d1117" stroke-width="2" />
-        <text id="label-a" class="anchor-label">A</text>
-        <text id="label-b" class="anchor-label">B</text>
+
+        <line id="dir-arrow" x1="0" y1="0" x2="90" y2="0" stroke="#f0883e" stroke-width="2" marker-end="url(#arrow)" opacity="0.9" />
+        <circle id="point-a" class="anchor" cx="-80" cy="0" r="9" fill="#f0883e" stroke="#0d1117" stroke-width="2" />
+        <circle id="point-b" class="anchor" cx="80" cy="0" r="9" fill="#f0883e" stroke="#0d1117" stroke-width="2" />
+        <text id="label-a" class="anchor-label" x="-68" y="-10">A</text>
+        <text id="label-b" class="anchor-label" x="92" y="-10">B</text>
       </svg>
     </div>
 
     <div class="meta">
-      <div>A: (<span id="meta-a">—</span>)</div>
-      <div>B: (<span id="meta-b">—</span>)</div>
+      <div>A: (<span id="meta-a">-80, 0</span>)</div>
+      <div>B: (<span id="meta-b">80, 0</span>)</div>
     </div>
+    <div class="status" id="status">JS: not running (page may be cached — try a hard refresh)</div>
 
     <script>
       (function () {
         var SVG_NS = "<http://www.w3.org/2000/svg>";
-        var stage = document.getElementById("stage");
-        var gridLayer = document.getElementById("grid-layer");
         var pairsLayer = document.getElementById("pairs-layer");
+        var stage = document.getElementById("stage");
         var dirArrow = document.getElementById("dir-arrow");
         var pointAEl = document.getElementById("point-a");
         var pointBEl = document.getElementById("point-b");
@@ -160,93 +189,43 @@
         var countEl = document.getElementById("count");
         var metaAEl = document.getElementById("meta-a");
         var metaBEl = document.getElementById("meta-b");
+        var statusEl = document.getElementById("status");
 
         var pointA = { x: -80, y: 0 };
         var pointB = { x: 80, y: 0 };
         var pairs = [];
         var palette = ["#58a6ff", "#3fb950", "#d29922", "#bc8cff", "#f778ba", "#39c5cf"];
 
-        function makeEl(tag, attrs) {
-          var el = document.createElementNS(SVG_NS, tag);
-          if (attrs) {
-            for (var k in attrs) {
-              if (Object.prototype.hasOwnProperty.call(attrs, k)) {
-                el.setAttribute(k, String(attrs[k]));
-              }
-            }
-          }
-          return el;
+        function setAttr(el, name, val) {
+          el.setAttributeNS(null, name, String(val));
         }
 
-        function buildGrid() {
-          var range = 280;
-          var minor = 50;
-          var major = 100;
+        function makeCircle(cx, cy, r, color, filled) {
+          var c = document.createElementNS(SVG_NS, "circle");
+          setAttr(c, "cx", cx);
+          setAttr(c, "cy", cy);
+          setAttr(c, "r", r);
+          if (filled) {
+            setAttr(c, "fill", color);
+          } else {
+            setAttr(c, "fill", "none");
+            setAttr(c, "stroke", color);
+            setAttr(c, "stroke-width", "2");
+          }
+          return c;
+        }
 
-          for (var x = -range; x <= range; x += minor) {
-            var isMajor = (x % major === 0);
-            gridLayer.appendChild(makeEl("line", {
-              x1: x, y1: -range, x2: x, y2: range,
-              stroke: isMajor ? "#21262d" : "#171c24",
-              "stroke-width": isMajor ? "0.7" : "0.4",
-            }));
-          }
-          for (var y = -range; y <= range; y += minor) {
-            var isMajorY = (y % major === 0);
-            gridLayer.appendChild(makeEl("line", {
-              x1: -range, y1: y, x2: range, y2: y,
-              stroke: isMajorY ? "#21262d" : "#171c24",
-              "stroke-width": isMajorY ? "0.7" : "0.4",
-            }));
-          }
-          gridLayer.appendChild(makeEl("line", {
-            x1: -range, y1: 0, x2: range, y2: 0,
-            stroke: "#30363d", "stroke-width": "0.8",
-          }));
-          gridLayer.appendChild(makeEl("line", {
-            x1: 0, y1: -range, x2: 0, y2: range,
-            stroke: "#30363d", "stroke-width": "0.8",
-          }));
-
-          for (var lx = -200; lx <= 200; lx += 100) {
-            if (lx === 0) continue;
-            var tx = makeEl("text", {
-              x: lx, y: 14, fill: "#484f58",
-              "font-size": "10", "text-anchor": "middle",
-            });
-            tx.textContent = String(lx);
-            gridLayer.appendChild(tx);
-          }
-          for (var ly = -200; ly <= 200; ly += 100) {
-            if (ly === 0) continue;
-            var ty = makeEl("text", {
-              x: 6, y: -ly + 3, fill: "#484f58",
-              "font-size": "10",
-            });
-            ty.textContent = String(ly);
-            gridLayer.appendChild(ty);
-          }
-
-          var sb = makeEl("g", { "pointer-events": "none" });
-          sb.appendChild(makeEl("line", {
-            x1: 160, y1: 260, x2: 260, y2: 260,
-            stroke: "#8b949e", "stroke-width": "1.2",
-          }));
-          sb.appendChild(makeEl("line", {
-            x1: 160, y1: 256, x2: 160, y2: 264,
-            stroke: "#8b949e", "stroke-width": "1.2",
-          }));
-          sb.appendChild(makeEl("line", {
-            x1: 260, y1: 256, x2: 260, y2: 264,
-            stroke: "#8b949e", "stroke-width": "1.2",
-          }));
-          var sbLabel = makeEl("text", {
-            x: 210, y: 252, fill: "#8b949e",
-            "font-size": "10", "text-anchor": "middle",
-          });
-          sbLabel.textContent = "100 units";
-          sb.appendChild(sbLabel);
-          gridLayer.appendChild(sb);
+        function makeLine(x1, y1, x2, y2, color) {
+          var l = document.createElementNS(SVG_NS, "line");
+          setAttr(l, "x1", x1);
+          setAttr(l, "y1", y1);
+          setAttr(l, "x2", x2);
+          setAttr(l, "y2", y2);
+          setAttr(l, "stroke", color);
+          setAttr(l, "stroke-width", "0.8");
+          setAttr(l, "stroke-dasharray", "4 4");
+          setAttr(l, "opacity", "0.5");
+          return l;
         }
 
         function direction() {
@@ -266,7 +245,7 @@
         function setupDrag(el, point) {
           el.addEventListener("pointerdown", function (e) {
             e.preventDefault();
-            el.setPointerCapture(e.pointerId);
+            try { el.setPointerCapture(e.pointerId); } catch (_) {}
             var start = svgPoint(e);
             var origin = { x: point.x, y: point.y };
             function move(ev) {
@@ -289,61 +268,38 @@
 
         function render() {
           var d = direction();
-          var arrowLen = 90;
+          setAttr(dirArrow, "x2", (d.x * 90).toFixed(2));
+          setAttr(dirArrow, "y2", (d.y * 90).toFixed(2));
 
-          dirArrow.setAttribute("x2", String((d.x * arrowLen).toFixed(2)));
-          dirArrow.setAttribute("y2", String((d.y * arrowLen).toFixed(2)));
+          setAttr(pointAEl, "cx", pointA.x.toFixed(2));
+          setAttr(pointAEl, "cy", pointA.y.toFixed(2));
+          setAttr(pointBEl, "cx", pointB.x.toFixed(2));
+          setAttr(pointBEl, "cy", pointB.y.toFixed(2));
+          setAttr(labelAEl, "x", (pointA.x + 12).toFixed(2));
+          setAttr(labelAEl, "y", (pointA.y - 10).toFixed(2));
+          setAttr(labelBEl, "x", (pointB.x + 12).toFixed(2));
+          setAttr(labelBEl, "y", (pointB.y - 10).toFixed(2));
 
-          pointAEl.setAttribute("cx", String(pointA.x.toFixed(2)));
-          pointAEl.setAttribute("cy", String(pointA.y.toFixed(2)));
-          pointBEl.setAttribute("cx", String(pointB.x.toFixed(2)));
-          pointBEl.setAttribute("cy", String(pointB.y.toFixed(2)));
-          labelAEl.setAttribute("x", String((pointA.x + 12).toFixed(2)));
-          labelAEl.setAttribute("y", String((pointA.y - 10).toFixed(2)));
-          labelBEl.setAttribute("x", String((pointB.x + 12).toFixed(2)));
-          labelBEl.setAttribute("y", String((pointB.y - 10).toFixed(2)));
+          while (pairsLayer.firstChild) {
+            pairsLayer.removeChild(pairsLayer.firstChild);
+          }
 
-          while (pairsLayer.firstChild) pairsLayer.removeChild(pairsLayer.firstChild);
-
-          for (var i = 0; i < pairs.length; i++) {
-            var pair = pairs[i];
+          pairs.forEach(function (pair, i) {
             var color = palette[i % palette.length];
             var cax = pointA.x + d.x * pair.disp;
             var cay = pointA.y + d.y * pair.disp;
             var cbx = pointB.x + d.x * pair.disp;
             var cby = pointB.y + d.y * pair.disp;
 
-            pairsLayer.appendChild(makeEl("line", {
-              x1: pointA.x.toFixed(2), y1: pointA.y.toFixed(2),
-              x2: cax.toFixed(2), y2: cay.toFixed(2),
-              stroke: color, "stroke-width": "0.8",
-              "stroke-dasharray": "3 3", opacity: "0.4",
-            }));
-            pairsLayer.appendChild(makeEl("line", {
-              x1: pointB.x.toFixed(2), y1: pointB.y.toFixed(2),
-              x2: cbx.toFixed(2), y2: cby.toFixed(2),
-              stroke: color, "stroke-width": "0.8",
-              "stroke-dasharray": "3 3", opacity: "0.4",
-            }));
-            pairsLayer.appendChild(makeEl("circle", {
-              cx: cax.toFixed(2), cy: cay.toFixed(2), r: pair.radius.toFixed(2),
-              fill: color, "fill-opacity": "0.10",
-              stroke: color, "stroke-width": "1.6",
-            }));
-            pairsLayer.appendChild(makeEl("circle", {
-              cx: cbx.toFixed(2), cy: cby.toFixed(2), r: pair.radius.toFixed(2),
-              fill: color, "fill-opacity": "0.10",
-              stroke: color, "stroke-width": "1.6",
-            }));
-            pairsLayer.appendChild(makeEl("circle", {
-              cx: cax.toFixed(2), cy: cay.toFixed(2), r: "2.4", fill: color,
-            }));
-            pairsLayer.appendChild(makeEl("circle", {
-              cx: cbx.toFixed(2), cy: cby.toFixed(2), r: "2.4", fill: color,
-            }));
-          }
+            pairsLayer.appendChild(makeLine(pointA.x, pointA.y, cax, cay, color));
+            pairsLayer.appendChild(makeLine(pointB.x, pointB.y, cbx, cby, color));
+            pairsLayer.appendChild(makeCircle(cax, cay, pair.radius, color, false));
+            pairsLayer.appendChild(makeCircle(cbx, cby, pair.radius, color, false));
+            pairsLayer.appendChild(makeCircle(cax, cay, 2.5, color, true));
+            pairsLayer.appendChild(makeCircle(cbx, cby, 2.5, color, true));
+          });
 
-          thetaVal.textContent = thetaInput.value + "°";
+          thetaVal.textContent = thetaInput.value + "\u00B0";
           countEl.textContent = String(pairs.length);
           metaAEl.textContent = pointA.x.toFixed(0) + ", " + (-pointA.y).toFixed(0);
           metaBEl.textContent = pointB.x.toFixed(0) + ", " + (-pointB.y).toFixed(0);
@@ -352,7 +308,7 @@
         addBtn.addEventListener("click", function () {
           var disp = parseFloat(dispInput.value);
           var radius = parseFloat(radiusInput.value);
-          if (!Number.isFinite(disp) || !Number.isFinite(radius) || radius <= 0) return;
+          if (!isFinite(disp) || !isFinite(radius) || radius <= 0) return;
           pairs.push({ disp: disp, radius: radius });
           render();
         });
@@ -366,8 +322,10 @@
         setupDrag(pointAEl, pointA);
         setupDrag(pointBEl, pointB);
 
-        buildGrid();
         render();
+
+        statusEl.textContent = "JS: ready";
+        statusEl.classList.add("ok");
       })();
     </script>
   </body>
